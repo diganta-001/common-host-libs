@@ -29,13 +29,13 @@ var (
 	linkStatusPattern      = "\\s+Link detected:\\s+yes"
 )
 
-//GetHostname : get the hostname for the host
+// GetHostname : get the hostname for the host
 func getHostname() (string, error) {
 	host, err := os.Hostname()
 	return host, err
 }
 
-//GetHostNameAndDomain : get host name and domain
+// GetHostNameAndDomain : get host name and domain
 func GetHostNameAndDomain() ([]string, error) {
 	log.Trace(">>>>> GetHostNameAndDomain")
 	defer log.Trace("<<<<< GetHostNameAndDomain")
@@ -52,7 +52,7 @@ func GetHostNameAndDomain() ([]string, error) {
 	return []string{hostname, domainname}, nil
 }
 
-//GetDomainName : returns domain name of the host
+// GetDomainName : returns domain name of the host
 func getDomainName() (string, error) {
 	// attempt using dnsdomainname when available.
 	args := []string{}
@@ -120,7 +120,7 @@ func GetIPV4NetworkAddress(ipv4Address, netMask string) (networkAddress string, 
 	return networkAddress, nil
 }
 
-//GetNetworkInterfaces : get the array of network interfaces
+// GetNetworkInterfaces : get the array of network interfaces
 func GetNetworkInterfaces() ([]*model.NetworkInterface, error) {
 	log.Trace(">>>>> GetNetworkInterfaces called")
 	defer log.Trace("<<<<< GetNetworkInterfaces")
@@ -196,7 +196,7 @@ func getMaskString(intMask int) string {
 	return maskV4
 }
 
-//TODO: remove this
+// TODO: remove this
 func getInterfacesIPAddr() ([]*model.NetworkInterface, error) {
 	log.Trace(">>>>> getInterfacesIpAddr")
 	defer log.Trace("<<<<< getInterfacesIPAddr")
@@ -308,4 +308,15 @@ func matchIPPattern(line string, nic *model.NetworkInterface) (*model.NetworkInt
 
 	log.Tracef("matchIPPattern returning %v", nic)
 	return nic, nil
+}
+func GetRoute(cmd string, args []string) (string, error) {
+	log.Trace(">>>>> GetRoute called with ", cmd, " args ", args)
+	defer log.Trace("<<<<< GetRoute")
+
+	out, rc, err := util.ExecCommandOutput(cmd, args)
+	if rc != 0 || err != nil {
+		return "", err
+	}
+	log.Tracef("GetRoute returned %s", out)
+	return out, nil
 }

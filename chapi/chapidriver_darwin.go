@@ -160,3 +160,6 @@ func (driver *MacDriver) RepairFileSystem(volumeID string, device *model.Device,
 func (driver *MacDriver) RepairFsckFileSystem(volumeId string, device *model.Device) error {
 	return fmt.Errorf("not implemented")
 }
+func (driver *FakeDriver) GetRoute(cmd string, args []string) (string, error) {
+	return "", fmt.Errorf("not implemented")
+}

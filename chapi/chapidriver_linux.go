@@ -610,3 +610,9 @@ func (driver *LinuxDriver) IsBlockDevice(devicePath string) (bool, error) {
 func (driver *LinuxDriver) GetBlockSizeBytes(devicePath string) (int64, error) {
 	return linux.GetBlockSizeBytes(devicePath)
 }
+
+func (driver *LinuxDriver) GetRoute(cmd string, args []string) (string, error) {
+	log.Tracef(">>>>> GetRoute, cmd: %s, args: %v", cmd, args)
+	defer log.Trace("<<<<< GetRoute")
+	return linux.GetRoute(cmd, args)
+}

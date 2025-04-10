@@ -189,3 +189,7 @@ func (driver *FakeDriver) RepairFileSystem(volumeID string, device *model.Device
 func (driver *FakeDriver) RepairFsckFileSystem(volumeId string, device *model.Device) error {
 	return nil
 }
+
+func (driver *FakeDriver) GetRoute(cmd string, args []string) (string, error) {
+	return "", nil
+}

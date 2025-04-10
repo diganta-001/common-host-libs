@@ -956,3 +956,48 @@ func handleError(httpStatus int, errorResponse *ErrorsPayload) error {
 	log.Errorf("HTTP error %d.  Error payload: %s", httpStatus, errorString.String())
 	return fmt.Errorf("Request failed with status code %d and errors %s", httpStatus, errorString.String())
 }
+
+func (provider *ContainerStorageProvider) PublishFileVolume(id string, opts map[string]interface{}) (*model.PublishFileInfo, error) {
+	response := &model.PublishFileInfo{}
+	var errorResponse *ErrorsPayload
+
+	publishFileOptions := &model.PublishFileOptions{
+		ID:     id,
+		Config: opts,
+	}
+
+	status, err := provider.invoke(
+		&connectivity.Request{
+			Action:        "PUT",
+			Path:          fmt.Sprintf("/containers/v1/volumes/%s/actions/publish", id),
+			Payload:       &publishFileOptions,
+			Response:      &response,
+			ResponseError: &errorResponse,
+		},
+	)
+	if errorResponse != nil {
+		return nil, handleError(status, errorResponse)
+	}
+
+	return response, err
+}
+
+// UnpublishVolume will make a volume invisible (remove an ACL) from the given host
+func (provider *ContainerStorageProvider) UnPublishFileVolume(id, fileShareNodeIP string) error {
+	var errorResponse *ErrorsPayload
+
+	status, err := provider.invoke(
+		&connectivity.Request{
+			Action:        "PUT",
+			Path:          fmt.Sprintf("/containers/v1/volumes/%s/actions/unpublish", id),
+			Payload:       &model.PublishFileOptions{ID: id, NodeIP: fileShareNodeIP},
+			Response:      nil,
+			ResponseError: &errorResponse,
+		},
+	)
+	if errorResponse != nil {
+		return handleError(status, errorResponse)
+	}
+
+	return err
+}
