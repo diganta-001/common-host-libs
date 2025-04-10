@@ -189,3 +189,8 @@ func (driver *FakeDriver) RepairFileSystem(volumeID string, device *model.Device
 func (driver *FakeDriver) RepairFsckFileSystem(volumeId string, device *model.Device) error {
 	return nil
 }
+
+// GetRoute returns the route for the given hostIP
+func (driver *FakeDriver) GetRoute(hostIP string) (string, error) {
+	return "", nil
+}

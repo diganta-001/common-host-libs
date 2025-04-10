@@ -32,4 +32,5 @@ type Driver interface {
 	IsFileSystemCorrupted(volumeID string, device *model.Device, fsOpts *model.FilesystemOpts) bool
 	RepairFileSystem(volumeID string, device *model.Device, fsOpts *model.FilesystemOpts) error
 	RepairFsckFileSystem(volumeId string, device *model.Device) error
+	GetRoute(hostIP string) (string, error)
 }

@@ -47,6 +47,7 @@ type StorageProvider interface {
 	DeleteVolumeGroup(id string) error
 	CreateSnapshotGroup(name, sourceVolumeGroupID string, opts map[string]interface{}) (*model.SnapshotGroup, error)
 	DeleteSnapshotGroup(id string) error
+	PublishFileVolume(id string, opts map[string]interface{}) (*model.PublishFileInfo, error)
 }
 
 // Credentials defines how a StorageProvider is accessed

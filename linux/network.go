@@ -27,6 +27,8 @@ var (
 	dnsDomainName          = "dnsdomainname"
 	maskFmt                = "%d.%d.%d.%d"
 	linkStatusPattern      = "\\s+Link detected:\\s+yes"
+	ROUTE                  = "route"
+	GET                    = "get"
 )
 
 //GetHostname : get the hostname for the host
@@ -308,4 +310,17 @@ func matchIPPattern(line string, nic *model.NetworkInterface) (*model.NetworkInt
 
 	log.Tracef("matchIPPattern returning %v", nic)
 	return nic, nil
+}
+
+func GetRoute(hostIP string) (string, error) {
+	args := []string{ROUTE, GET, hostIP}
+	log.Trace(">>>>> GetRoute called with ", ipcommand, " args ", args)
+	defer log.Trace("<<<<< GetRoute")
+
+	out, rc, err := util.ExecCommandOutput(ipcommand, args)
+	if rc != 0 || err != nil {
+		return "", err
+	}
+	log.Tracef("GetRoute returned %s", out)
+	return out, nil
 }

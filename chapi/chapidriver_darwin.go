@@ -160,3 +160,8 @@ func (driver *MacDriver) RepairFileSystem(volumeID string, device *model.Device,
 func (driver *MacDriver) RepairFsckFileSystem(volumeId string, device *model.Device) error {
 	return fmt.Errorf("not implemented")
 }
+
+// GetRoute returns the route for the given hostIP
+func (driver *MacDriver) GetRoute(hostIP string) (string, error) {
+	return "", fmt.Errorf("not implemented")
+}
