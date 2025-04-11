@@ -386,15 +386,16 @@ type Token struct {
 
 // Node represents a host that would access volumes through the CSP
 type Node struct {
-	ID           string    `json:"id,omitempty"`
-	Name         string    `json:"name,omitempty"`
-	UUID         string    `json:"uuid,omitempty"`
-	Iqns         []*string `json:"iqns,omitempty"`
-	Networks     []*string `json:"networks,omitempty"`
-	Wwpns        []*string `json:"wwpns,omitempty"`
-	ChapUser     string    `json:"chap_user,omitempty"`
-	ChapPassword string    `json:"chap_password,omitempty"`
-	AccessProtocol string  `json:"access_protocol,omitempty"`
+	ID             string            `json:"id,omitempty"`
+	Name           string            `json:"name,omitempty"`
+	UUID           string            `json:"uuid,omitempty"`
+	Iqns           []*string         `json:"iqns,omitempty"`
+	Networks       []*string         `json:"networks,omitempty"`
+	Wwpns          []*string         `json:"wwpns,omitempty"`
+	ChapUser       string            `json:"chap_user,omitempty"`
+	ChapPassword   string            `json:"chap_password,omitempty"`
+	AccessProtocol string            `json:"access_protocol,omitempty"`
+	NodeIPMap      map[string]string `json:"node_ip_map,omitempty"`
 }
 
 // KeyValue is a store of key-value pairs
@@ -457,4 +458,15 @@ type ProcMount struct {
 	MountPoint string `json:"Mountpoint,omitempty"`
 	FileSystem string `json:"FileSystem,omitempty"`
 	Options    string `json:"Options,omitempty"`
+}
+
+type PublishFileOptions struct {
+	ID     string                 `json:"id,omitempty"`
+	Config map[string]interface{} `json:"config,omitempty"`
+	NodeIP string                 `json:"node_ip,omitempty"`
+}
+
+// PublishInfo is the node side data required to access a volume
+type PublishFileInfo struct {
+	HostIP string `json:"hostIP,omitempty"`
 }
