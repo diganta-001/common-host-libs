@@ -610,3 +610,18 @@ func (driver *LinuxDriver) IsBlockDevice(devicePath string) (bool, error) {
 func (driver *LinuxDriver) GetBlockSizeBytes(devicePath string) (int64, error) {
 	return linux.GetBlockSizeBytes(devicePath)
 }
+
+// GetRoute retrieves the routing information for the specified host IP.
+//
+// Parameters:
+//   - hostIP: The IP address of the host for which routing information is to be retrieved.
+//
+// Returns:
+//   - string: The routing information for the specified host IP.
+//   - error: An error object if the operation fails, or nil if successful.
+
+func (driver *LinuxDriver) GetRoute(hostIP string) (string, error) {
+	log.Tracef(">>>>> GetRoute hostIP: %s", hostIP)
+	defer log.Trace("<<<<< GetRoute")
+	return linux.GetRoute(hostIP)
+}

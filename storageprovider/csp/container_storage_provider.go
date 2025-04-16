@@ -956,3 +956,38 @@ func handleError(httpStatus int, errorResponse *ErrorsPayload) error {
 	log.Errorf("HTTP error %d.  Error payload: %s", httpStatus, errorString.String())
 	return fmt.Errorf("Request failed with status code %d and errors %s", httpStatus, errorString.String())
 }
+
+// PublishFileVolume updates the configuration of a file volume to include the specified node's IP address.
+// This enables NFS services for the file volume on the given node.
+//
+// Parameters:
+//   - id: The unique identifier of the file volume to be published.
+//   - opts: A map containing configuration options, including the node's IP address.
+//
+// Returns:
+//   - *model.PublishFileInfo: Information about the published file volume.
+//   - error: An error object if the operation fails, or nil if successful.
+func (provider *ContainerStorageProvider) PublishFileVolume(id string, opts map[string]interface{}) (*model.PublishFileInfo, error) {
+	response := &model.PublishFileInfo{}
+	var errorResponse *ErrorsPayload
+
+	publishFileOptions := &model.PublishFileOptions{
+		ID:     id,
+		Config: opts,
+	}
+
+	status, err := provider.invoke(
+		&connectivity.Request{
+			Action:        "PUT",
+			Path:          fmt.Sprintf("/containers/v1/volumes/%s/actions/publish", id),
+			Payload:       &publishFileOptions,
+			Response:      &response,
+			ResponseError: &errorResponse,
+		},
+	)
+	if errorResponse != nil {
+		return nil, handleError(status, errorResponse)
+	}
+
+	return response, err
+}

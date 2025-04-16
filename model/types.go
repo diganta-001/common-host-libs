@@ -458,3 +458,14 @@ type ProcMount struct {
 	FileSystem string `json:"FileSystem,omitempty"`
 	Options    string `json:"Options,omitempty"`
 }
+
+type PublishFileOptions struct {
+	ID     string                 `json:"id,omitempty"`
+	Config map[string]interface{} `json:"config,omitempty"`
+	NodeIP string                 `json:"node_ip,omitempty"`
+}
+
+// PublishInfo is the node side data required to access a volume
+type PublishFileInfo struct {
+	HostIP string `json:"hostIP,omitempty"`
+}
